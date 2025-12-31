@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveNow - Premium Car Rental</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+          crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">DriveNow</div>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#vehicles">Vehicles</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <h1>Find Your Dream Car</h1>
+    <p>Experience luxury and performance like never before</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for a car...">
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <section id="vehicles" class="featured-cars">
+    <h2>Our Fleet</h2>
+    <div class="car-grid">
+      <!-- Cars will be dynamically loaded via AJAX -->
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>We provide premium luxury car rental services with the best vehicles and customer service in the industry.</p>
+  </section>
+
+  <section id="services" class="services">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Car Rental</h3>
+        <p>Wide range of luxury vehicles for rent</p>
+      </div>
+      <div class="service-card">
+        <h3>Airport Transfer</h3>
+        <p>Premium airport transfer services</p>
+      </div>
+      <div class="service-card">
+        <h3>Chauffeur Service</h3>
+        <p>Professional drivers at your service</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>DriveNow</h3>
+        <p>Your premium car rental service</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#vehicles">Vehicles</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <p>Email: info@drivenow.com</p>
+        <p>Phone: +1 234 567 8900</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 DriveNow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Load scripts -->
+  <script src="scripts/main.js" defer></script>
+</body>
+</html>

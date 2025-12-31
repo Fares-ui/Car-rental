@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Details - DriveNow</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/car-details.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+          crossorigin="anonymous"></script>
+  <!-- Stripe JS -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <div class="car-details-container">
+    <h1 id="car-name">Loading...</h1>
+    <img id="car-image" src="" alt="Car Image">
+    <p id="car-description"></p>
+    <p id="car-price"></p>
+    <button id="rentBtn">Rent Now</button>
+
+    <div id="payment-form-container" style="display: none;">
+      <form id="payment-form">
+        <input type="text" id="customer-name" placeholder="Your Name" required>
+        <input type="email" id="customer-email" placeholder="Your Email" required>
+        <input type="tel" id="customer-phone" placeholder="Your Phone" required>
+        <input type="number" id="rental-days" placeholder="Number of Days" min="1" value="1" required>
+
+        <div id="card-element"></div>
+
+        <button id="submit-payment" type="submit">
+          Pay $<span id="total-payment">0</span>
+        </button>
+        <div id="payment-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Load scripts -->
+  <script src="scripts/car-details.js" defer></script>
+</body>
+</html>

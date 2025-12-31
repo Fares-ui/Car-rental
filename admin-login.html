@@ -1,0 +1,223 @@
+<!-- ========================================
+     FIXED admin-login.html
+     Now properly validates credentials
+======================================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - DriveNow</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .login-container h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 600;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus {
+      border-color: #FF5000;
+      box-shadow: 0 0 10px rgba(255, 80, 0, 0.2);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #FF5000 0%, #cc4000 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 80, 0, 0.4);
+    }
+    
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #666;
+      text-decoration: none;
+    }
+    
+    .back-link:hover {
+      color: #FF5000;
+    }
+    
+    .demo-note {
+      background: #fff3cd;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #ffc107;
+      color: #856404;
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #dc3545;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>🔒 Admin Login</h1>
+    
+    <div class="demo-note">
+      <strong>Demo Mode:</strong><br>
+      Username: <code>admin</code><br>
+      Password: <code>admin123</code>
+    </div>
+
+    <div class="error-message" id="errorMessage"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Username *</label>
+        <input type="text" id="username" required autocomplete="username">
+      </div>
+      
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="password" required autocomplete="current-password">
+      </div>
+      
+      <button type="submit" class="login-btn" id="loginBtn">Login</button>
+    </form>
+    
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+  
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMessage');
+      const loginBtn = document.getElementById('loginBtn');
+      
+      // Clear previous error
+      errorMsg.classList.remove('show');
+      
+      // Validate inputs are not empty
+      if (!username || !password) {
+        showError('Please enter both username and password');
+        return;
+      }
+      
+      // Disable button during processing
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in...';
+      
+      // Simulate loading delay for better UX
+      setTimeout(() => {
+        // Simple demo authentication - MUST match exactly
+        if (username === 'admin' && password === 'admin123') {
+          // Set session/auth marker
+          sessionStorage.setItem('adminAuthenticated', 'true');
+          sessionStorage.setItem('adminUsername', username);
+          sessionStorage.setItem('loginTime', new Date().toISOString());
+          
+          // Success - redirect
+          window.location.href = 'admin.html';
+        } else {
+          // Failed authentication
+          showError('Invalid username or password! Please use admin/admin123');
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Login';
+        }
+      }, 500);
+    });
+
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMessage');
+      errorMsg.textContent = message;
+      errorMsg.classList.add('show');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        errorMsg.classList.remove('show');
+      }, 5000);
+    }
+
+    // Check if already logged in
+    if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+      window.location.href = 'admin.html';
+    }
+  </script>
+</body>
+</html>

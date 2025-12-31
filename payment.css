@@ -1,0 +1,236 @@
+/* ========================================
+   Payment Page Styles
+======================================== */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.payment-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 3rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.payment-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #FF5000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   Car Box
+======================================== */
+.car-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.car-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.car-box img {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 1rem 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.car-box p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    opacity: 0.9;
+}
+
+#car-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FF5000;
+    margin-top: 1rem;
+}
+
+/* ========================================
+   Payment Form
+======================================== */
+#payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#payment-form input,
+#payment-form select {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#payment-form input:focus,
+#payment-form select:focus {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.3);
+}
+
+#payment-form input::placeholder {
+    color: #999;
+}
+
+/* ========================================
+   Stripe Card Element
+======================================== */
+#card-element {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    transition: all 0.3s;
+}
+
+#card-element:focus-within {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.3);
+}
+
+/* ========================================
+   Submit Button
+======================================== */
+#submit-payment {
+    background: linear-gradient(135deg, #FF5000 0%, #cc4000 100%);
+    color: #fff;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 80, 0, 0.4);
+    margin-top: 1rem;
+}
+
+#submit-payment:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 80, 0, 0.6);
+}
+
+#submit-payment:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+#submit-payment:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   Payment Message
+======================================== */
+#payment-message {
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 1rem;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========================================
+   Back Button
+======================================== */
+.back-button {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+/* ========================================
+   Loading Spinner
+======================================== */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Responsive Design
+======================================== */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .payment-container h1 {
+        font-size: 2rem;
+    }
+    
+    .car-box h2 {
+        font-size: 1.5rem;
+    }
+}

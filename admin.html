@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - DriveNow</title>
+  <link rel="stylesheet" href="styles/admin.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+          crossorigin="anonymous"></script>
+  
+  <!-- AUTH CHECK - Must be before page loads -->
+  <script>
+    // Immediate auth check before page renders
+    if (sessionStorage.getItem('adminAuthenticated') !== 'true') {
+      alert('Access Denied! Please login first.');
+      window.location.href = 'admin-login.html';
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <h1>🚗 DriveNow Admin Dashboard</h1>
+    <div class="user-info">
+      <span>Welcome, <strong>Admin</strong></span>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Admin Container -->
+  <div class="admin-container">
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Cars</h3>
+        <div class="stat-value" id="totalCars">0</div>
+        <div class="stat-label">Available vehicles</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Bookings</h3>
+        <div class="stat-value" id="totalBookings">0</div>
+        <div class="stat-label">All time bookings</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <div class="stat-value" id="totalRevenue">$0</div>
+        <div class="stat-label">Lifetime earnings</div>
+      </div>
+      <div class="stat-card">
+        <h3>Active Rentals</h3>
+        <div class="stat-value" id="activeRentals">0</div>
+        <div class="stat-label">Currently rented</div>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="showTab('cars')">🚗 Manage Cars</button>
+      <button class="tab-btn" onclick="showTab('bookings')">📋 Bookings</button>
+      <button class="tab-btn" onclick="showTab('customers')">👥 Customers</button>
+      <button class="tab-btn" onclick="showTab('messages')">✉️ Messages</button>
+    </div>
+
+    <!-- Cars Tab -->
+    <div id="cars-tab" class="tab-content active">
+      <div class="admin-section">
+        <h2>Add New Car</h2>
+        <form id="addCarForm" class="add-car-form">
+          <div class="form-group">
+            <label>Car Name *</label>
+            <input type="text" name="name" required placeholder="e.g., BMW 5 Series">
+          </div>
+          <div class="form-group">
+            <label>Type *</label>
+            <select name="type" required>
+              <option value="">Select Type</option>
+              <option value="Luxury Sedan">Luxury Sedan</option>
+              <option value="Luxury SUV">Luxury SUV</option>
+              <option value="Muscle Car">Muscle Car</option>
+              <option value="Supercar">Supercar</option>
+              <option value="Sports Car">Sports Car</option>
+              <option value="Electric">Electric</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price ($/day) *</label>
+            <input type="number" name="price" required min="0" step="0.01" placeholder="350">
+          </div>
+          <div class="form-group">
+            <label>Year *</label>
+            <input type="number" name="year" required min="2000" max="2030" placeholder="2024">
+          </div>
+          <div class="form-group">
+            <label>Transmission *</label>
+            <select name="transmission" required>
+              <option value="">Select</option>
+              <option value="Automatic">Automatic</option>
+              <option value="Manual">Manual</option>
+              <option value="Automatic/Manual">Automatic/Manual</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Fuel Type *</label>
+            <select name="fuel" required>
+              <option value="">Select</option>
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Electric">Electric</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Seats *</label>
+            <input type="number" name="seats" required min="2" max="9" placeholder="4">
+          </div>
+          <div class="form-group">
+            <label>Image URL *</label>
+            <input type="text" name="image" required placeholder="images/car1.jpg">
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Description *</label>
+            <textarea name="description" required placeholder="Luxury Sedan, 4 Seats, Automatic"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+            <button type="submit" class="btn-primary">Add Car</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-section">
+        <h2>Existing Cars</h2>
+        <div class="search-filter-bar">
+          <input type="text" class="search-box" id="carSearch" placeholder="🔍 Search cars...">
+          <select class="filter-select" id="carTypeFilter">
+            <option value="">All Types</option>
+            <option value="Luxury Sedan">Luxury Sedan</option>
+            <option value="Luxury SUV">Luxury SUV</option>
+            <option value="Muscle Car">Muscle Car</option>
+            <option value="Supercar">Supercar</option>
+          </select>
+        </div>
+        <div class="data-table-container">
+          <table class="data-table" id="carsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Year</th>
+                <th>Seats</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="carsTableBody">
+              <!-- Data loaded via AJAX -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bookings Tab -->
+    <div id="bookings-tab" class="tab-content">
+      <div class="admin-section">
+        <h2>All Bookings</h2>
+        <div class="search-filter-bar">
+          <input type="text" class="search-box" id="bookingSearch" placeholder="🔍 Search bookings...">
+          <select class="filter-select" id="bookingStatusFilter">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Car</th>
+                <th>Start Date</th>
+                <th>Days</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <tr>
+                <td colspan="8" style="text-align: center; padding: 2rem; color: #999;">
+                  No bookings yet. Data will appear here when customers make reservations.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customers Tab -->
+    <div id="customers-tab" class="tab-content">
+      <div class="admin-section">
+        <h2>Customer List</h2>
+        <div class="search-filter-bar">
+          <input type="text" class="search-box" id="customerSearch" placeholder="🔍 Search customers...">
+        </div>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Total Bookings</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="customersTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #999;">
+                  No customers yet. Data will appear when customers make their first booking.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages Tab -->
+    <div id="messages-tab" class="tab-content">
+      <div class="admin-section">
+        <h2>Contact Messages</h2>
+        <div class="search-filter-bar">
+          <input type="text" class="search-box" id="messageSearch" placeholder="🔍 Search messages...">
+          <select class="filter-select" id="messageStatusFilter">
+            <option value="">All Status</option>
+            <option value="new">New</option>
+            <option value="read">Read</option>
+            <option value="replied">Replied</option>
+          </select>
+        </div>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="messagesTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #999;">
+                  No messages yet. Messages from the contact form will appear here.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Admin JavaScript -->
+  <script src="scripts/admin.js" defer></script>
+</body>
+</html>

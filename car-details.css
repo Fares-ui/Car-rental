@@ -1,0 +1,165 @@
+/* ========================================
+   Car Details Page Styles
+======================================== */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.car-details-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.car-details-container h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #FF5000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#car-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+#car-description {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+#car-price {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    color: #FF5000;
+    margin-bottom: 2rem;
+}
+
+#rentBtn {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #FF5000 0%, #cc4000 100%);
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 80, 0, 0.4);
+}
+
+#rentBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 80, 0, 0.6);
+}
+
+/* Payment Form Container */
+#payment-form-container {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+#payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#payment-form input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#payment-form input:focus {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.3);
+}
+
+#card-element {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+}
+
+#submit-payment {
+    background: linear-gradient(135deg, #FF5000 0%, #cc4000 100%);
+    color: #fff;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 80, 0, 0.4);
+}
+
+#submit-payment:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 80, 0, 0.6);
+}
+
+#submit-payment:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#payment-message {
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .car-details-container {
+        padding: 2rem 1.5rem;
+    }
+    
+    #car-image {
+        height: 250px;
+    }
+}

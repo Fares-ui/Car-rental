@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - DriveNow</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/payment.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+          crossorigin="anonymous"></script>
+  <!-- Stripe JS -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h1>Car Payment</h1>
+
+    <div class="car-box">
+      <h2 id="car-name">Loading...</h2>
+      <img id="car-image" src="" alt="">
+      <p id="car-description"></p>
+      <p id="car-price"></p>
+    </div>
+
+    <form id="payment-form">
+      <input type="text" id="customer-name" placeholder="Your Name" required>
+      <input type="email" id="customer-email" placeholder="Your Email" required>
+      <input type="tel" id="customer-phone" placeholder="Your Phone Number" required>
+
+      <div id="card-element"></div>
+
+      <button id="submit-payment" type="submit">
+        Pay $<span id="pay-amount">0</span>
+      </button>
+
+      <p id="payment-message"></p>
+    </form>
+  </div>
+
+  <!-- Load scripts -->
+  <script src="scripts/payment.js" defer></script>
+</body>
+</html>

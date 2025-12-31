@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Backend Project</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 450px;
+    }
+    
+    .login-container h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 600;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus {
+      border-color: #FF5000;
+      box-shadow: 0 0 10px rgba(255, 80, 0, 0.2);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #FF5000 0%, #cc4000 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 80, 0, 0.4);
+    }
+    
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .register-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #666;
+    }
+    
+    .register-link a {
+      color: #FF5000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+    
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #666;
+      text-decoration: none;
+    }
+    
+    .back-link:hover {
+      color: #FF5000;
+    }
+
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #28a745;
+      display: none;
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #dc3545;
+      display: none;
+    }
+
+    .error-message.show,
+    .success-message.show {
+      display: block;
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    .demo-note {
+      background: #e7f3ff;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #2196f3;
+      color: #0d47a1;
+      font-size: 0.9rem;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: 0.5rem;
+    }
+
+    .forgot-password a {
+      color: #666;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      color: #FF5000;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>🔑 Customer Login</h1>
+    
+    <div class="demo-note">
+      <strong>Demo Mode:</strong><br>
+      Login with any registered email or create a new account.<br>
+      For admin access, use <a href="admin-login.html" style="color: #FF5000;">Admin Login</a>
+    </div>
+
+    <div class="success-message" id="successMessage"></div>
+    <div class="error-message" id="errorMessage"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="email" required placeholder="your@email.com" autocomplete="email">
+      </div>
+      
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="password" required placeholder="Enter your password" autocomplete="current-password">
+        <div class="forgot-password">
+          <a href="#" onclick="alert('Password reset feature coming soon!'); return false;">Forgot password?</a>
+        </div>
+      </div>
+      
+      <button type="submit" class="login-btn" id="loginBtn">Login</button>
+    </form>
+    
+    <p class="register-link">
+      Don't have an account? <a href="register.html">Register here</a>
+    </p>
+    
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+  
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const loginBtn = document.getElementById('loginBtn');
+      
+      // Clear previous messages
+      hideMessages();
+      
+      // Validation
+      if (!email || !password) {
+        showError('Please enter both email and password');
+        return;
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showError('Please enter a valid email address');
+        return;
+      }
+      
+      // Disable button during processing
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in...';
+      
+      // Simulate login (in production, verify with backend)
+      setTimeout(() => {
+        // Get registered users from localStorage (demo mode)
+        const existingUsers = JSON.parse(localStorage.getItem('backend_project_users') || '[]');
+        const user = existingUsers.find(u => u.email === email);
+        
+        if (user) {
+          // Successful login
+          sessionStorage.setItem('userAuthenticated', 'true');
+          sessionStorage.setItem('userEmail', email);
+          sessionStorage.setItem('userName', user.fullName);
+          sessionStorage.setItem('loginTime', new Date().toISOString());
+          
+          showSuccess(`Welcome back, ${user.fullName}! Redirecting...`);
+          
+          // Redirect to homepage after 1.5 seconds
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          // User not found
+          showError('Invalid email or password. Please register if you don\'t have an account.');
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Login';
+        }
+      }, 800);
+    });
+
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMessage');
+      errorMsg.textContent = message;
+      errorMsg.classList.add('show');
+      
+      setTimeout(() => {
+        errorMsg.classList.remove('show');
+      }, 5000);
+    }
+
+    function showSuccess(message) {
+      const successMsg = document.getElementById('successMessage');
+      successMsg.textContent = message;
+      successMsg.classList.add('show');
+    }
+
+    function hideMessages() {
+      document.getElementById('errorMessage').classList.remove('show');
+      document.getElementById('successMessage').classList.remove('show');
+    }
+
+    // Check if already logged in
+    if (sessionStorage.getItem('userAuthenticated') === 'true') {
+      const userName = sessionStorage.getItem('userName');
+      showSuccess(`Already logged in as ${userName}. Redirecting...`);
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
